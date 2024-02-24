@@ -21,99 +21,15 @@ public class Ui extends Main {
 	private static JPanel cardPanel;
     private static CardLayout cardLayout;
     private static JTextArea textarea; 
+    JButton choice1 = new JButton();
+    JButton choice2 = new JButton();
+    static JButton back = new JButton();
     static ArrayList<String> images = new ArrayList<String>(7); // CREATES AN ARRAY OF THE LOCATION IMAGES SO THEY CAN BE INDEXED
     public static int currentImageIndex = 0;
-    public String currentLocation = Navigation.currentLocation;
-    public String previousLocation;
+   // public Integer currentLocation = Navigation.currentLocation;
+
     
-    public void actionPerformedLeft(JButton button, JButton button2, Consumer<ActionEvent> actionHandler) {
-    	if (currentLocation == "Menu") {
-    		previousLocation = currentLocation;
-    		currentLocation = "Plane";
-    		button.setText("Go to River");
-    		button2.setText("Go to Jungle");
-
-    	}
-    	else if (currentLocation == "Plane Crash") {
-    		previousLocation = currentLocation;
-    		currentLocation = "River";
-    		button.setText("Go to Beach");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "River") {
-    		previousLocation = currentLocation;
-    		currentLocation = "Beach";
-    		button.setText("Swim in Ocean");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Beach") {
-    		previousLocation = currentLocation;
-    		button.setText(" ");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Jungle") {
-    		previousLocation = currentLocation;
-    		currentLocation = "Cave";
-    		button.setText(" ");
-    		button2.setText(" ");
-
-    	}
-
-
-    }
-
-    public void actionPerformedRight(JButton button2, JButton button, Consumer<ActionEvent> actionHandler) {
-    	if (currentLocation == "Menu") {
-    		button.setText("Start Game");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Plane Crash") {
-    		previousLocation = currentLocation;
-    		currentLocation = "Jungle";
-    		button.setText("Go to Cave");
-    		button2.setText("Go to Village");
-    	}
-    	else if (currentLocation == "Jungle") {
-    		previousLocation = currentLocation;
-    		currentLocation = "Village";
-    		button.setText(" ");
-    		button2.setText(" ");
-    	}
-
-
-    }
-
-    public void actionPerformedBack(JButton button, JButton button2, Consumer<ActionEvent> actionHandler) {
-    	currentLocation = previousLocation;
-    	if (currentLocation == "Menu") {
-    		button.setText("Start Game");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Plane Crash") {
-    		button.setText("Go to River");
-    		button2.setText("Go to Jungle");
-    	}
-    	else if (currentLocation == "River") {
-    		button.setText("Go to Beach");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Beach") {
-    		button.setText(" ");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Jungle") {
-    		button.setText("Go to Cave");
-    		button2.setText("Go to Village");
-    	}
-    	else if (currentLocation == "Cave") {
-    		button.setText(" ");
-    		button2.setText(" ");
-    	}
-    	else if (currentLocation == "Village") {
-    		button.setText(" ");
-    		button2.setText(" ");
-    	}
-    }
+    
     
     // LOCATION IMAGE FILES
     static String menuImg = "resources/WelcomeScreen.jpg";
@@ -126,18 +42,21 @@ public class Ui extends Main {
 		
 	static String currentLocImg = menuImg;  
 		{
-    	images.add(menuImg);
-    	images.add(planeCrashImg);
-    	images.add(jungleImg);
-    	images.add(villageImg);
-    	images.add(caveImg);
-    	images.add(riverImg);
-    	images.add(beachImg);
+    	images.add(menuImg);//0
+    	images.add(planeCrashImg);//1
+    	images.add(riverImg);//2
+    	images.add(beachImg);//3
+    	images.add(jungleImg);//4
+    	images.add(caveImg);//5
+    	images.add(villageImg);//6
+
+
     	System.out.println(images);
     	}
 		
     	 static ImageIcon currentScreen = new ImageIcon(currentLocImg);
     	 static JLabel screenLabel = new JLabel(currentScreen);
+    	 
     	//static String currentLocImg = images.get(Navigation.locNumber);
     	     	 
     public Ui() {
@@ -147,16 +66,20 @@ public class Ui extends Main {
                           
              screenLabel = new JLabel(new ImageIcon());
              cardPanel.add(screenLabel);
+             screenLabel.setIcon(currentScreen);
          
-         cardPanel.add(screenLabel);
+    
      }
         
     
     
     
     public void updateImage() {
+    	System.out.println(Navigation.currentLocation);
+    	
     	currentImageIndex = (currentImageIndex + 1) % images.size(); // Cycle through the images
-		String imagePath = images.get(currentImageIndex);
+    	
+		String imagePath = images.get(Navigation.currentLocation);
         
 		try {
              File file = new File(imagePath);
@@ -174,8 +97,8 @@ public class Ui extends Main {
         		 e.printStackTrace();
         	 }
 		}
-              
-     public static JPanel getCardPanel() {
+    
+     public JPanel getCardPanel() {
          return cardPanel;
      }
      
@@ -193,30 +116,31 @@ public class Ui extends Main {
     	 updateImage();
     	    
      	// CHANGES SET LOCATION SO SYSTEM KNOWS MORE THAN SIMPLY LEFT OR RIGHT
-    	 switch (currentImageIndex) {
+    	 switch (Navigation.currentLocation) {
          case 0:
-             currentLocation = "Menu";
+             choice1.setText("Start");
+             choice2.setText("Load");
              break;
          case 1:
-             currentLocation = "Plane Crash Site";
+            // currentLocation = "Plane Crash Site";
              break;
          case 2:
-             currentLocation = "Jungle";
+            // currentLocation = "Jungle";
              break;
          case 3:
-             currentLocation = "Village";
+            // currentLocation = "Village";
              break;
          case 4:
-             currentLocation = "Cave";
+             //currentLocation = "Cave";
              break;
          case 5:
-             currentLocation = "River";
+           //  currentLocation = "River";
              break;
          case 6:
-             currentLocation = "Beach";
+          //   currentLocation = "Beach";
              break;
          default:
-             currentLocation = "Unknown";
+            // currentLocation = "Unknown";
              break;
      }
     	 //currentLocation = currentLocation;
@@ -257,8 +181,14 @@ public class Ui extends Main {
 		 showNextCard();
 	 }
      
-     public static void showPreviousCard() {
-         cardLayout.previous(cardPanel);
+     public void showPreviousCard() {
+    	 back.addActionListener(e -> {
+    		 if (Navigation.currentLocation == -1) {
+    			 Navigation.currentLocation = 0;
+    		 }
+	        	Navigation.currentLocation = Navigation.previousLocation;
+	        	updateImage();
+	        });
      }
 
      //public static 
@@ -305,7 +235,9 @@ public class Ui extends Main {
 	        JPanel buttonPanel = new JPanel();
 
 	        //buttons
-	        JButton back = addButton("Go Back", (ActionEvent e) -> {
+
+	        
+	        		back = addButton("Go Back", (ActionEvent e) -> {
 
 	        	showPreviousCard();
 
@@ -313,22 +245,75 @@ public class Ui extends Main {
 
 	        buttonPanel.add(back);
 
-	        JButton choice1 = addButton(Navigation.goLeft(Navigation.currentLocation),(ActionEvent e) -> {	        	
-	        	System.out.println(currentLocation);
-	        	showNextCard();
-
-	        });
+	        
+	        		
+	        
+	        
+	        
+	        		choice1 = addButton("Start", (e) -> {
+	        			
+	        			showNextCard();
+	        			
+	        		});
+	        		
+	        		 
 
 
 	       buttonPanel.add(choice1);
 
-	        JButton choice2 = addButton(Navigation.goRight(Navigation.currentLocation),(ActionEvent e) -> {
-	        	System.out.println(currentLocation);
+	        		choice2 = addButton("Load", (e) -> {
+	
 	        	showNextCard();
-
+	        	
 	        });
+	       
 
 	        buttonPanel.add(choice2);
+	        
+	        choice1.addActionListener(e -> {
+	        	if (Navigation.currentLocation == 0) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 1;
+	        	}
+	        	else if (Navigation.currentLocation == 1) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 2;
+	        	}
+	        	else if (Navigation.currentLocation == 2) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 3;
+	        	}
+	        	else if (Navigation.currentLocation == 4) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 5;
+	        	}
+	        	else if (Navigation.currentLocation == -1) {
+	    			 Navigation.currentLocation = 0;
+	    		 }
+	        });
+	        
+	        choice2.addActionListener(e -> {
+	        	if (Navigation.currentLocation == 1) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 4;
+	        	}
+	        	else if (Navigation.currentLocation == 4) {
+	        		Navigation.previousLocation = Navigation.currentLocation;
+	        		Navigation.currentLocation = 6;
+	        	}
+	        	else if (Navigation.currentLocation == -1) {
+	    			 Navigation.currentLocation = 0;
+	    		 }
+
+	        	
+	        });
+	        
+	        back.addActionListener(e -> {
+	        	if (Navigation.currentLocation == -1) {
+	    			 Navigation.currentLocation = 0;
+	    		 }
+	        	Navigation.currentLocation -= 1;
+	        });
 
 //Frame components 
 	        
@@ -336,9 +321,10 @@ public class Ui extends Main {
 	        frame.add(buttonPanel, BorderLayout.SOUTH);
 	        frame.setVisible(true);
 	        
-	         actionPerformedLeft(choice1, choice2, e -> {	
+	        
+	         
 	   
-	        	});
+	        
 	        
 		return frame;
 	    }
@@ -413,20 +399,29 @@ public class Ui extends Main {
 		        });
 		        
 		        buttonPanel.add(back);
+		        
+		        
 
-		        JButton choice1 = addButton(Navigation.goLeft(Navigation.currentLocation),(ActionEvent e) -> {	        	
+		        JButton choice1 = addButton("Start" ,(ActionEvent e) -> {	        	
 		        	
 		        	showNextCard();
 		       });
 		        	        
 		       buttonPanel.add(choice1);
+		       
+		      
 		        
 		       
-		        JButton choice2 = addButton(Navigation.goRight(Navigation.currentLocation),(ActionEvent e) -> {
+		        JButton choice2 = addButton(" " ,(ActionEvent e) -> {
+		        	
 		        	showNextCard();
 		        });
 		        
+		        
+		        
 		        buttonPanel.add(choice2);
+		     
+		        
 		        
 //add button to frame components 
 		        buttonFrame.getContentPane().add(buttonPanel);
