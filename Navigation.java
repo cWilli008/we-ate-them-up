@@ -1,14 +1,15 @@
 public class Navigation extends Main {
 
-	static String currentLocation;
+	static Integer currentLocation;
+	static Integer previousLocation;
 // OPTIONS FOR NEXT LOCATION BASED ON CURRENT LOCATION
-public String goLeft(String currentLocation) {
-	String option1 = "Next";
-	if (currentLocation == "Menu") {
-		return option1 = "Start Game";
-		
+public void goLeft(Integer currentLocation) {
+	
+	if (currentLocation == 1) {
+		previousLocation = currentLocation;
+
 	}
-	else if (currentLocation == "Plane Crash") {
+	/*else if (currentLocation == "Plane Crash") {
 		return option1 = "Go to River";
 	}
 	else if (currentLocation == "River") {
@@ -20,12 +21,16 @@ public String goLeft(String currentLocation) {
 	else if (currentLocation == "Jungle") {
 		return option1 = "Go to Cave";
 	}
-return option1;
+return option1;*/ 
+	
+
 
 }
 
-public String goRight(String currentLocation) {
-	String option2 = " ";
+
+
+public String goRight(Integer currentLocation) {
+	//String option2 = " ";
 	if (currentLocation == "Menu") {
 		
 		return option2 = "Load Game";
