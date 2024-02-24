@@ -5,17 +5,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class Main { 
 	public static void main(String [] args) {
-	String currentLocation = "Menu";
+		
 
 	{
 		SwingUtilities.invokeLater(() -> {
     		Ui Ui = new Ui();
-    		
+    		Navigation.currentLocation = 0;
     		JFrame visualFrame = Ui.visuals();
+    	
     		//JFrame buttonFrame = Ui.createButtonFrame();
+    		
+    		
     		
     	});
 
@@ -25,18 +29,18 @@ public class Main {
 		Inventory.printInventory();
 		
 //Print player updated inventory
-        //System.out.println("Inventory:" +  player);
+        //System.out.println("Inventory:" +  "Inventory");
 			
 	
 	
 	//Navigation Class
     Navigation navigation = new Navigation();
-    String leftOption = navigation.goLeft(currentLocation);
-    String rightOption = navigation.goRight(currentLocation);
+   // String leftOption = navigation.goLeft(navigation.currentLocation);
+   // String rightOption = navigation.goRight(navigation.currentLocation);
    
     //Print navigation path
-    System.out.println("Left Path:" +  leftOption);
-    System.out.println("Right Path:" +  rightOption);
+  //  System.out.println("Left Path:" +  leftOption);
+   // System.out.println("Right Path:" +  rightOption);
          
 
 //Location Class
