@@ -26,28 +26,21 @@ return option1;*/
 
 
 }
-
-
-
 public String goRight(Integer currentLocation) {
-	//String option2 = " ";
-	if (currentLocation == "Menu") {
-		
-		return option2 = "Load Game";
-	}
-	else if (currentLocation == "Plane Crash") {
-		return option2 = "Go to Jungle";
-	}
-	else if (currentLocation == "River") {
-		return option2 = " ";
-	}
-	else if (currentLocation == "Beach") {
-		return option2 = " ";
-	}
-	else if (currentLocation == "Jungle") {
-		return option2 = "Go to Village";
-	}
-return option2;
+    String option2 = " ";
+    if (currentLocation == 1) {
+        option2 = "Load Game";
+    } else if (currentLocation == 2) {
+        option2 = "Go to Jungle";
+    } else if (currentLocation == 3) {
+        option2 = " ";
+    } else if (currentLocation == 4) {
+        option2 = " ";
+    } else if (currentLocation == 5) {
+        option2 = "Go to Village";
+    }
+    return option2;
+}
+}
 
-}
-}
+
