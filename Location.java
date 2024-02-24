@@ -1,7 +1,8 @@
+import java.util.ArrayList;
+
 public class Location extends Main {
 	
-	public static void main(String[] args) {
-	}
+
 	
 		//Instance variables for the properties of the location
 		    private String name;
@@ -17,6 +18,21 @@ public class Location extends Main {
 			    this.hasEvent =hasEvent;
 			exits = new Location[2]; //there should be 2 exits within a location  
 
+			ArrayList<String> Locations = new ArrayList<String>();
+			
+			Locations.add("Menu");//0
+			Locations.add("Plane Crash");//1
+			Locations.add("River");//2
+			Locations.add("Beach");//3
+			Locations.add("Jungle");//4
+			Locations.add("Cave");//5
+			Locations.add("Village");//6
+			
+			
+						
+			
+			
+			
 		    }
 	        //Getter methods for retrieving location information
 		    public String getName() {
