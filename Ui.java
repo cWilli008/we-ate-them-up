@@ -24,11 +24,100 @@ public class Ui extends Main {
     static ArrayList<String> images = new ArrayList<String>(7); // CREATES AN ARRAY OF THE LOCATION IMAGES SO THEY CAN BE INDEXED
     public static int currentImageIndex = 0;
     public String currentLocation = Navigation.currentLocation;
+    public String previousLocation;
+    
+    public void actionPerformedLeft(JButton button, JButton button2, Consumer<ActionEvent> actionHandler) {
+    	if (currentLocation == "Menu") {
+    		previousLocation = currentLocation;
+    		currentLocation = "Plane";
+    		button.setText("Go to River");
+    		button2.setText("Go to Jungle");
+
+    	}
+    	else if (currentLocation == "Plane Crash") {
+    		previousLocation = currentLocation;
+    		currentLocation = "River";
+    		button.setText("Go to Beach");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "River") {
+    		previousLocation = currentLocation;
+    		currentLocation = "Beach";
+    		button.setText("Swim in Ocean");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Beach") {
+    		previousLocation = currentLocation;
+    		button.setText(" ");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Jungle") {
+    		previousLocation = currentLocation;
+    		currentLocation = "Cave";
+    		button.setText(" ");
+    		button2.setText(" ");
+
+    	}
+
+
+    }
+
+    public void actionPerformedRight(JButton button2, JButton button, Consumer<ActionEvent> actionHandler) {
+    	if (currentLocation == "Menu") {
+    		button.setText("Start Game");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Plane Crash") {
+    		previousLocation = currentLocation;
+    		currentLocation = "Jungle";
+    		button.setText("Go to Cave");
+    		button2.setText("Go to Village");
+    	}
+    	else if (currentLocation == "Jungle") {
+    		previousLocation = currentLocation;
+    		currentLocation = "Village";
+    		button.setText(" ");
+    		button2.setText(" ");
+    	}
+
+
+    }
+
+    public void actionPerformedBack(JButton button, JButton button2, Consumer<ActionEvent> actionHandler) {
+    	currentLocation = previousLocation;
+    	if (currentLocation == "Menu") {
+    		button.setText("Start Game");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Plane Crash") {
+    		button.setText("Go to River");
+    		button2.setText("Go to Jungle");
+    	}
+    	else if (currentLocation == "River") {
+    		button.setText("Go to Beach");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Beach") {
+    		button.setText(" ");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Jungle") {
+    		button.setText("Go to Cave");
+    		button2.setText("Go to Village");
+    	}
+    	else if (currentLocation == "Cave") {
+    		button.setText(" ");
+    		button2.setText(" ");
+    	}
+    	else if (currentLocation == "Village") {
+    		button.setText(" ");
+    		button2.setText(" ");
+    	}
+    }
     
     // LOCATION IMAGE FILES
     static String menuImg = "resources/WelcomeScreen.jpg";
-    //https://github.com/CS-142-Spring/team-black-panther-party/blob/a16c5133347af8d1d930d1129ed15236683bd626/resources/WelcomeScreen.jpg
-	static String planeCrashImg = "resources/PlaneCrashScene.jpg";
+    static String planeCrashImg = "resources/PlaneCrashScene.jpg";
 	static String jungleImg = "resources/JungleScene.jpg";
 	static String villageImg = "resources/Village.jpg";
 	static String caveImg = "resources/Cave.jpg"; 
@@ -62,6 +151,9 @@ public class Ui extends Main {
          cardPanel.add(screenLabel);
      }
         
+    
+    
+    
     public void updateImage() {
     	currentImageIndex = (currentImageIndex + 1) % images.size(); // Cycle through the images
 		String imagePath = images.get(currentImageIndex);
@@ -127,7 +219,7 @@ public class Ui extends Main {
              currentLocation = "Unknown";
              break;
      }
-    	 currentLocation = currentLocation;
+    	 //currentLocation = currentLocation;
     	     		
  	}
      static JTextArea createText (String text) {
@@ -203,15 +295,62 @@ public class Ui extends Main {
 	    }
 
 	    
-	    public JFrame visuals() {    	
-	    	  JFrame frame = new JFrame("gaming");
+	    public JFrame visuals() { 
+	    	JFrame frame = new JFrame("gaming");
+	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	        //good game window size
+	        frame.setSize(960, 540);
+
+
+	        JPanel buttonPanel = new JPanel();
+
+	        //buttons
+	        JButton back = addButton("Go Back", (ActionEvent e) -> {
+
+	        	showPreviousCard();
+
+	        });
+
+	        buttonPanel.add(back);
+
+	        JButton choice1 = addButton(Navigation.goLeft(Navigation.currentLocation),(ActionEvent e) -> {	        	
+	        	System.out.println(currentLocation);
+	        	showNextCard();
+
+	        });
+
+
+	       buttonPanel.add(choice1);
+
+	        JButton choice2 = addButton(Navigation.goRight(Navigation.currentLocation),(ActionEvent e) -> {
+	        	System.out.println(currentLocation);
+	        	showNextCard();
+
+	        });
+
+	        buttonPanel.add(choice2);
+
+//Frame components 
+	        
+	        frame.add(getCardPanel(), BorderLayout.CENTER);
+	        frame.add(buttonPanel, BorderLayout.SOUTH);
+	        frame.setVisible(true);
+	        
+	         actionPerformedLeft(choice1, choice2, e -> {	
+	   
+	        	});
+	        
+		return frame;
+	    }
+	    	
+	    	/*  JFrame frame = new JFrame("gaming");
 		        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		       
 		        //good game window size
-		        frame.setSize(1920, 1080);
+		        frame.setSize(1920, 1080);}
 	    
 		       //Create Buttton Panel
-		        JPanel buttonPanel = new JPanel();
+		       JPanel buttonPanel = new JPanel();
 		        
 		     // Create menu panel
 		        JPanel menuPanel = new JPanel(new BorderLayout());
@@ -221,13 +360,13 @@ public class Ui extends Main {
 		        String menuImg = "resources/WelcomeScreen.jpg";
 		        ImageIcon menuIcon = new ImageIcon(menuImg);
 		        JLabel menuLabel = new JLabel(menuIcon);
-		        menuPanel.add(menuLabel, BorderLayout.CENTER);
+		        menuPanel.add(menuLabel, BorderLayout.CENTER);*/
 
 		        // Create buttons for the menu
-		        JButton startButton = new JButton("Start Game");
-		        JButton exitButton = new JButton("Exit");
+		      //  JButton startButton = new JButton("Start Game");
+		     //   JButton exitButton = new JButton("Exit");
 
-		        startButton.addActionListener(new ActionListener() {
+		     /*   startButton.addActionListener(new ActionListener() {
 		            @Override
 		            public void actionPerformed(ActionEvent e) {
 		                // Handle start button action
@@ -257,7 +396,7 @@ public class Ui extends Main {
 		        frame.setVisible(true);
 		        
 		        return frame;
-	    }
+	    }*/
 	    
 	    public JFrame createButtonFrame() {
 	    	JFrame buttonFrame = new JFrame("Buttons");
